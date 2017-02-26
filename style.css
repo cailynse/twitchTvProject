@@ -26,6 +26,7 @@ div.tab a {
 	float: left;
 	display: block;
 	color: #371778;
+	font-family: "Roboto Mono";
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
@@ -54,5 +55,6 @@ div.tab a:focus,
 	border: 1px solid #ccc;
 	border-top: none;
 	color: #371778;
+	font-family: "Roboto Mono";
 	background-color: #EFFC63;
 }
