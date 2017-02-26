@@ -1,12 +1,60 @@
-body {
+#mainPage {
 	padding-top: 5%;
+	background-color: #3A014A;
 }
 #twitchLogo {
 	height: 100px;
 	width: 150px;
 	display: block;
-	margin: 0 auto;
+	margin: 2% auto;
 }
 #displayTable {
 	margin: 2% 10%;
+}
+
+/* Style the tab */
+
+div.tab {
+	overflow: hidden;
+	border: 1px solid #ccc;
+	background-color: #E6FB02;
+}
+
+/* Style the links inside the tab */
+
+div.tab a {
+	float: left;
+	display: block;
+	color: #371778;
+	font-family: "Roboto Mono";
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	transition: 0.3s;
+	font-size: 17px;
+}
+
+/* Change background color of links on hover */
+
+div.tab a:hover {
+	background-color: #B4C500;
+}
+
+/* Create an active/current tablink class */
+
+div.tab a:focus,
+.active {
+	background-color: #8E9B00;
+}
+
+/* Style the tab content */
+
+.tabcontent {
+	display: none;
+	padding: 6px 12px;
+	border: 1px solid #ccc;
+	border-top: none;
+	color: #371778;
+	font-family: "Roboto Mono";
+	background-color: #EFFC63;
 }
