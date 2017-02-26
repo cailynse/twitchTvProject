@@ -23,7 +23,26 @@
 <body>
 	<div id="displayTable" class="well">
 		<img id="twitchLogo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Twitch_logo.svg/683px-Twitch_logo.svg.png">
+		<div class="tab">
+			<a href="javascript:void(0)" class="tablinks" onclick="userView(event, 'All')">All</a>
+			<a href="javascript:void(0)" class="tablinks" onclick="userView(event, 'Online')">Online</a>
+			<a href="javascript:void(0)" class="tablinks" onclick="userView(event, 'Offline')">Offline</a>
+		</div>
 
+		<div id="All" class="tabcontent">
+			<h3>All</h3>
+			<p>This is where a list of all users will show up</p>
+		</div>
+
+		<div id="Online" class="tabcontent">
+			<h3>Online</h3>
+			<p>This is where only the online users will show up</p>
+		</div>
+
+		<div id="Offline" class="tabcontent">
+			<h3>Offline</h3>
+			<p>This is where only the offline users will show up</p>
+		</div>
 
 
 	</div>
