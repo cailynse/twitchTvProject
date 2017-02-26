@@ -1,0 +1,12 @@
+body {
+	padding-top: 5%;
+}
+#twitchLogo {
+	height: 100px;
+	width: 150px;
+	display: block;
+	margin: 0 auto;
+}
+#displayTable {
+	margin: 2% 10%;
+}
