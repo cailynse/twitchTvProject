@@ -44,19 +44,34 @@ window.onload = function () {
 		} else {
 			var link = data.stream.channel.url;
 			console.log(link);
-			var logoImg = data.stream.channel.logo;
+			var logoImg = data.stream.channel.logo,
+				description = data.stream.channel.status,
+				userName = data.stream.channel.name;
 
-
+			//create well for user information//
 			var onlineUserDisplay = document.createElement("div");
-			onlineUserDisplay.classList.add("well");
+			onlineUserDisplay.classList.add("well", "userDisplay");
+
+			//create button to go to user page//		
 			var userLogoBtn = document.createElement("a");
 			userLogoBtn.setAttribute("href", link);
 			userLogoBtn.setAttribute("target", "_blank");
+			//setting user's logo image as button//
 			var userLogo = document.createElement("img");
 			userLogo.setAttribute("src", logoImg);
+			userLogo.classList.add("logoImage");
 			userLogoBtn.appendChild(userLogo);
+			//put image button in user information well//
 			onlineUserDisplay.appendChild(userLogoBtn);
-
+			var usernameHeading = document.createElement('h3');
+			var userNameNode = document.createTextNode(userName);
+			usernameHeading.appendChild(userNameNode);
+			onlineUserDisplay.appendChild(usernameHeading);
+			//create <p> for streaming information//
+			var streamInfoPar = document.createElement("p");
+			var streamInfo = document.createTextNode(description);
+			streamInfoPar.appendChild(streamInfo);
+			onlineUserDisplay.appendChild(streamInfoPar);
 
 			var userDisplay = document.createElement("div");
 			userDisplay.classList.add("well");

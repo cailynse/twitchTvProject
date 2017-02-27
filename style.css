@@ -58,3 +58,11 @@ div.tab a:focus,
 	font-family: "Roboto Mono";
 	background-color: #EFFC63;
 }
+.userDisplay {
+	background-color: #A890D8;
+}
+.logoImage {
+	height: 40px;
+	border-radius: 2;
+	display: block;
+}
