@@ -1,6 +1,38 @@
 /*jslint browser: true*/
 /*global $, jQuery, alert*/
 
+//This funtion allows the buttons to change which users are visible (online, offline or all)//
+function displayRelevantUsers(event, userBtn) {
+	var onlineUsers = document.getElementsByClassName("online");
+	var offlineUsers = document.getElementsByClassName("offline");
+	if (userBtn === 'Online') {
+		console.log("Online selected");
+		for (i = 0; i < onlineUsers.length; i++) {
+			onlineUsers[i].style.display = "block";
+		}
+		for (i = 0; i < offlineUsers.length; i++) {
+			offlineUsers[i].style.display = "none";
+		}
+	} else if (userBtn === 'Offline') {
+		console.log("Offline Selected")
+		for (i = 0; i < onlineUsers.length; i++) {
+			onlineUsers[i].style.display = "none";
+		}
+		for (i = 0; i < offlineUsers.length; i++) {
+			offlineUsers[i].style.display = "block";
+		}
+	} else {
+		for (i = 0; i < onlineUsers.length; i++) {
+			onlineUsers[i].style.display = "block";
+		}
+		for (i = 0; i < offlineUsers.length; i++) {
+			offlineUsers[i].style.display = "block";
+		}
+		console.log("All selected")
+	}
+
+}
+
 
 
 window.onload = function () {
@@ -12,26 +44,24 @@ window.onload = function () {
 
 
 		if (data.stream === null) {
+			//Create wells for offline users - at this point they contain nothing//
 			var offlineUserDisplay = document.createElement("div");
-			offlineUserDisplay.classList.add("well");
+			offlineUserDisplay.classList.add("well", "offline", "userStyle");
+			document.getElementById("userInfo").appendChild(offlineUserDisplay);
 
-			var userDisplay = document.createElement("div");
-			userDisplay.classList.add("well");
-
-			document.getElementById("Offline").appendChild(offlineUserDisplay);
-			document.getElementById("All").appendChild(userDisplay);
 			return;
 
 		} else {
-			var link = data.stream.channel.url;
-			console.log(link);
-			var logoImg = data.stream.channel.logo,
+			//if the user is online make a well for that user//
+
+			var link = data.stream.channel.url,
+				logoImg = data.stream.channel.logo,
 				description = data.stream.channel.status,
 				userName = data.stream.channel.name;
 
 			//create well for user information//
 			var onlineUserDisplay = document.createElement("div");
-			onlineUserDisplay.classList.add("well", "userDisplay");
+			onlineUserDisplay.classList.add("well", "userDisplay", "online", "userStyle");
 
 			//create button to go to user page//		
 			var userLogoBtn = document.createElement("a");
@@ -53,12 +83,7 @@ window.onload = function () {
 			var streamInfo = document.createTextNode(description);
 			streamInfoPar.appendChild(streamInfo);
 			onlineUserDisplay.appendChild(streamInfoPar);
-
-			var userDisplay = document.createElement("div");
-			userDisplay.classList.add("well");
-			document.getElementById("Online").appendChild(onlineUserDisplay);
-
-			document.getElementById("All").appendChild(userDisplay);
+			document.getElementById("userInfo").appendChild(onlineUserDisplay);
 
 		}
 
