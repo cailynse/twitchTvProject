@@ -24,10 +24,11 @@
 <body id="mainPage">
 	<div id="displayTable" class="well">
 		<img id="twitchLogo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Twitch_logo.svg/683px-Twitch_logo.svg.png">
-		<div class="tab">
-			<a href="javascript:void(0)" class="tablinks" onclick="userView(event, 'All')">All</a>
-			<a href="javascript:void(0)" class="tablinks" onclick="userView(event, 'Online')">Online</a>
-			<a href="javascript:void(0)" class="tablinks" onclick="userView(event, 'Offline')">Offline</a>
+		<div id="btnBar">
+			<a id="allUsersBtn" class="btn">All</a>
+			<a id="onlineUsersBtn" class="btn">Online</a>
+			<a id="offlineUsersBtn" class="btn">Offline</a>
+
 		</div>
 
 		<div id="All" class="tabcontent">
