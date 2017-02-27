@@ -61,8 +61,13 @@ div.tab a:focus,
 .userDisplay {
 	background-color: #A890D8;
 }
+.online {
+	color: green;
+}
+.offline {
+	color: red;
+}
 .logoImage {
 	height: 40px;
-	border-radius: 2;
 	display: block;
 }

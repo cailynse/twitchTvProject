@@ -3,7 +3,10 @@
 
 function userView(evt, users) {
 	// Declare all variables
+	console.log(users);
 	var i, tabcontent, tablinks;
+	var onlineUsers = document.getElementsByClassName("online");
+	var offlineUsers = document.getElementsByClassName("offline");
 
 	// Get all elements with class="tabcontent" and hide them
 	tabcontent = document.getElementsByClassName("tabcontent");
@@ -15,6 +18,32 @@ function userView(evt, users) {
 	tablinks = document.getElementsByClassName("tablinks");
 	for (i = 0; i < tablinks.length; i++) {
 		tablinks[i].className = tablinks[i].className.replace(" active", "");
+	}
+
+	if (evt === Offline) {
+		for (i = 0; i < onlineUsers.length; i++) {
+			onlineUsers[i].style.display = "none";
+		}
+		for (i = 0; i < offlineUsers.length; i++) {
+			offlineUsers[i].style.display = "block";
+		}
+	} else if (evt === Online) {
+		for (i = 0; i < offlineUsers.length; i++) {
+			offlineUsers[i].style.display = "none";
+		}
+		for (i = 0; i < onlineUsers.length; i++) {
+			onlineUsers[i].style.display = "block";
+		}
+
+	} else {
+		for (i = 0; i < onlineUsers.length; i++) {
+			onlineUsers[i].style.display = "block";
+		}
+		for (i = 0; i < offlineUsers.length; i++) {
+			offlineUsers[i].style.display = "block";
+		}
+
+
 	}
 
 	// Show the current tab, and add an "active" class to the link that opened the tab
@@ -33,24 +62,20 @@ window.onload = function () {
 		if (data.stream === null) {
 			var offlineUserDisplay = document.createElement("div");
 			offlineUserDisplay.classList.add("well");
+			offlineUserDisplay.setAttribute("display", "block");
 
-			var userDisplay = document.createElement("div");
-			userDisplay.classList.add("well");
-
-			document.getElementById("Offline").appendChild(offlineUserDisplay);
-			document.getElementById("All").appendChild(userDisplay);
+			document.getElementById("All").appendChild(offlineUserDisplay);
 			return;
 
 		} else {
-			var link = data.stream.channel.url;
-			console.log(link);
-			var logoImg = data.stream.channel.logo,
+			var link = data.stream.channel.url,
+				logoImg = data.stream.channel.logo,
 				description = data.stream.channel.status,
 				userName = data.stream.channel.name;
 
 			//create well for user information//
 			var onlineUserDisplay = document.createElement("div");
-			onlineUserDisplay.classList.add("well", "userDisplay");
+			onlineUserDisplay.classList.add("well", "userDisplay", "online");
 
 			//create button to go to user page//		
 			var userLogoBtn = document.createElement("a");
@@ -73,11 +98,10 @@ window.onload = function () {
 			streamInfoPar.appendChild(streamInfo);
 			onlineUserDisplay.appendChild(streamInfoPar);
 
-			var userDisplay = document.createElement("div");
-			userDisplay.classList.add("well");
-			document.getElementById("Online").appendChild(onlineUserDisplay);
 
-			document.getElementById("All").appendChild(userDisplay);
+			document.getElementById("All").appendChild(onlineUserDisplay);
+
+
 
 		}
 
