@@ -99,7 +99,7 @@ window.onload = function () {
 			onlineUserDisplay.appendChild(streamInfoPar);
 
 
-			document.getElementById("All").appendChild(onlineUserDisplay);
+			document.getElementsByClassName("tabcontent").appendChild(onlineUserDisplay);
 
 
 
