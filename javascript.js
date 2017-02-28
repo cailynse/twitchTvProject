@@ -43,8 +43,34 @@ window.onload = function () {
 			description = "Offline",
 			userName = data.name,
 			link = "https://www.twitch.tv/" + userName;
-		console.log(data, description, userName, link);
 
+		var offlineUserDisplay = document.createElement("div");
+		offlineUserDisplay.classList.add("well", "offline", "userStyle");
+
+		//create button to go to user page//		
+		var userLogoBtn = document.createElement("a");
+		userLogoBtn.setAttribute("href", link);
+		userLogoBtn.setAttribute("target", "_blank");
+
+		//setting user's logo image as button//
+		var userLogo = document.createElement("img");
+		userLogo.setAttribute("src", logoImg);
+		userLogo.classList.add("logoImage");
+		userLogoBtn.appendChild(userLogo);
+
+		//put image and username button in user information well//
+		offlineUserDisplay.appendChild(userLogoBtn);
+		var usernameHeading = document.createElement('h3');
+		var userNameNode = document.createTextNode(userName);
+		usernameHeading.appendChild(userNameNode);
+		offlineUserDisplay.appendChild(usernameHeading);
+
+		//create <p> for streaming information//
+		var streamInfoPar = document.createElement("p");
+		var streamInfo = document.createTextNode(description);
+		streamInfoPar.appendChild(streamInfo);
+		offlineUserDisplay.appendChild(streamInfoPar);
+		document.getElementById("userInfo").appendChild(offlineUserDisplay);
 	}
 
 	function getOfflineUserInfo(userName) {
@@ -72,10 +98,6 @@ window.onload = function () {
 		if (data.stream === null) {
 			//Create wells for offline users - at this point they contain nothing//
 			var userName = data._links.channel.substr(38);
-
-			var offlineUserDisplay = document.createElement("div");
-			offlineUserDisplay.classList.add("well", "offline", "userStyle");
-			document.getElementById("userInfo").appendChild(offlineUserDisplay);
 			getOfflineUserInfo(userName);
 
 
@@ -115,7 +137,6 @@ window.onload = function () {
 			streamInfoPar.appendChild(streamInfo);
 			onlineUserDisplay.appendChild(streamInfoPar);
 			document.getElementById("userInfo").appendChild(onlineUserDisplay);
-			return true;
 		}
 
 	};
