@@ -48,18 +48,17 @@ window.onload = function () {
 		offlineUserDisplay.classList.add("well", "offline", "userStyle");
 
 		//create button to go to user page//		
-		var userLogoBtn = document.createElement("a");
-		userLogoBtn.setAttribute("href", link);
-		userLogoBtn.setAttribute("target", "_blank");
+		var userPageBtn = document.createElement("a");
+		userPageBtn.setAttribute("href", link);
+		userPageBtn.setAttribute("target", "_blank");
 
 		//setting user's logo image as button//
 		var userLogo = document.createElement("img");
 		userLogo.setAttribute("src", logoImg);
 		userLogo.classList.add("logoImage");
-		userLogoBtn.appendChild(userLogo);
+		offlineUserDisplay.appendChild(userLogo);
 
 		//put image and username button in user information well//
-		offlineUserDisplay.appendChild(userLogoBtn);
 		var usernameHeading = document.createElement('h3');
 		var userNameNode = document.createTextNode(userName);
 		usernameHeading.appendChild(userNameNode);
@@ -68,7 +67,8 @@ window.onload = function () {
 		//create <p> for streaming information//
 		var streamInfoPar = document.createElement("p");
 		var streamInfo = document.createTextNode(description);
-		streamInfoPar.appendChild(streamInfo);
+		userPageBtn.appendChild(streamInfo);
+		streamInfoPar.appendChild(userPageBtn);
 		offlineUserDisplay.appendChild(streamInfoPar);
 		document.getElementById("userInfo").appendChild(offlineUserDisplay);
 	}
@@ -114,18 +114,17 @@ window.onload = function () {
 			onlineUserDisplay.classList.add("well", "userDisplay", "online", "userStyle");
 
 			//create button to go to user page//		
-			var userLogoBtn = document.createElement("a");
-			userLogoBtn.setAttribute("href", link);
-			userLogoBtn.setAttribute("target", "_blank");
+			var userPageBtn = document.createElement("a");
+			userPageBtn.setAttribute("href", link);
+			userPageBtn.setAttribute("target", "_blank");
 
 			//setting user's logo image as button//
 			var userLogo = document.createElement("img");
 			userLogo.setAttribute("src", logoImg);
 			userLogo.classList.add("logoImage");
-			userLogoBtn.appendChild(userLogo);
+			onlineUserDisplay.appendChild(userLogo);
 
 			//put image and username button in user information well//
-			onlineUserDisplay.appendChild(userLogoBtn);
 			var usernameHeading = document.createElement('h3');
 			var userNameNode = document.createTextNode(userName);
 			usernameHeading.appendChild(userNameNode);
@@ -134,7 +133,8 @@ window.onload = function () {
 			//create <p> for streaming information//
 			var streamInfoPar = document.createElement("p");
 			var streamInfo = document.createTextNode(description);
-			streamInfoPar.appendChild(streamInfo);
+			userPageBtn.appendChild(streamInfo);
+			streamInfoPar.appendChild(userPageBtn);
 			onlineUserDisplay.appendChild(streamInfoPar);
 			document.getElementById("userInfo").appendChild(onlineUserDisplay);
 		}
