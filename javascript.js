@@ -39,24 +39,44 @@ window.onload = function () {
 	'use strict';
 
 	var handleOfflineUserData = function (data, textStatus, jqXHR) {
-		console.log(data);
+		var logoImg = data.logo,
+			description = "Offline",
+			userName = data.name,
+			link = "https://www.twitch.tv/" + userName;
+		console.log(data, description, userName, link);
+
 	}
+
+	function getOfflineUserInfo(userName) {
+		$.ajax({
+			type: "GET",
+			url: "https://wind-bow.gomix.me/twitch-api/users/" + userName,
+			contentType: "application/json; charset=utf-8",
+			dataType: "jsonp",
+			async: "false",
+			success: handleOfflineUserData,
+			error: function (errorMessage) {
+				alert("Unable to retrieve results. Please refresh page.");
+			}
+		});
+	}
+
 
 	var url = "https://wind-bow.gomix.me/twitch-api",
 		//these are the usernames suggested in the excersize description//
-		usernames = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"],
+		usernames = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas"],
 		currentUserName = "";
 
 
 	var handleData = function (data, textStatus, jqXHR) {
-
 		if (data.stream === null) {
 			//Create wells for offline users - at this point they contain nothing//
+			var userName = data._links.channel.substr(38);
 
 			var offlineUserDisplay = document.createElement("div");
 			offlineUserDisplay.classList.add("well", "offline", "userStyle");
 			document.getElementById("userInfo").appendChild(offlineUserDisplay);
-			return false;
+			getOfflineUserInfo(userName);
 
 
 		} else {
@@ -102,33 +122,18 @@ window.onload = function () {
 
 	// For loop that iterates through the array of suggested users //
 	for (var i = 0; i < usernames.length; i++) {
-		var user = usernames[i],
-			status = false;
+		var user = usernames[i];
 		$.ajax({
 			type: "GET",
 			url: "https://wind-bow.gomix.me/twitch-api/streams/" + user,
 			contentType: "application/json; charset=utf-8",
 			dataType: "jsonp",
 			async: "false",
-			success: status = handleData,
+			success: handleData,
 			error: function (errorMessage) {
 				alert("Unable to retrieve results. Please refresh page.");
 			}
 		});
-		console.log(status);
-		if (status === false) {
-			$.ajax({
-				type: "GET",
-				url: "https://wind-bow.gomix.me/twitch-api/users/" + user,
-				contentType: "application/json; charset=utf-8",
-				dataType: "jsonp",
-				async: "false",
-				success: handleOfflineUserData,
-				error: function (errorMessage) {
-					alert("Unable to retrieve results. Please refresh page.");
-				}
-			});
-		}
 	}
 
 
