@@ -55,21 +55,22 @@
 		background-color: #8E9B00;
 	}
 	#userInfo {
+		margin: 2%;
+		padding: 2%;
 		border: 1px solid #ccc;
-		border-top: none;
+		border-radius: 20px;
 		color: #371778;
 		font-family: "Roboto Mono";
-		background-color: #EFFC63;
+		background: #A890D8;
 	}
 	.userStyle {
+		text-align: center;
+		margin: 2%;
 		color: #371778;
-		background-color: #E6FB02;
-	}
-	.userDisplay {
-		background-color: #A890D8;
+		background-color: #EFFC63 !important;
 	}
 	.logoImage {
 		height: 40px;
 		border-radius: 2;
-		display: block;
+		display: inline-block;
 	}
