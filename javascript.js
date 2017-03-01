@@ -5,6 +5,7 @@
 function displayRelevantUsers(event, userBtn) {
 	var onlineUsers = document.getElementsByClassName("online");
 	var offlineUsers = document.getElementsByClassName("offline");
+	var inactiveUsers = document.getElementsByClassName("inactive");
 
 	if (userBtn === 'Online') {
 		for (i = 0; i < onlineUsers.length; i++) {
@@ -12,6 +13,9 @@ function displayRelevantUsers(event, userBtn) {
 		}
 		for (i = 0; i < offlineUsers.length; i++) {
 			offlineUsers[i].style.display = "none";
+		}
+		for (i = 0; i < inactiveUsers.length; i++) {
+			inactiveUsers[i].style.display = "none";
 		}
 
 	} else if (userBtn === 'Offline') {
@@ -21,6 +25,9 @@ function displayRelevantUsers(event, userBtn) {
 		for (i = 0; i < offlineUsers.length; i++) {
 			offlineUsers[i].style.display = "block";
 		}
+		for (i = 0; i < inactiveUsers.length; i++) {
+			inactiveUsers.style.display = "none";
+		}
 
 	} else {
 		for (i = 0; i < onlineUsers.length; i++) {
@@ -28,6 +35,9 @@ function displayRelevantUsers(event, userBtn) {
 		}
 		for (i = 0; i < offlineUsers.length; i++) {
 			offlineUsers[i].style.display = "block";
+		}
+		for (i = 0; i < inactiveUsers.length; i++) {
+			inactiveUsers[i].style.display = "block";
 		}
 	}
 
@@ -38,39 +48,69 @@ function displayRelevantUsers(event, userBtn) {
 window.onload = function () {
 	'use strict';
 
-	var handleOfflineUserData = function (data, textStatus, jqXHR) {
-		var logoImg = data.logo,
-			description = "Offline",
-			userName = data.name,
-			link = "https://www.twitch.tv/" + userName;
+	function handleInactiveUserData(data) {
+		var logoImg = "https://dummyimage.com/600x400/000000/6f0dab&text=No+User",
+			userName = data.message;
 
-		var offlineUserDisplay = document.createElement("div");
-		offlineUserDisplay.classList.add("well", "offline", "userStyle");
+		var inactiveUserDisplay = document.createElement("div");
+		inactiveUserDisplay.classList.add("well", "inactive", "userStyle");
 
-		//create button to go to user page//		
-		var userPageBtn = document.createElement("a");
-		userPageBtn.setAttribute("href", link);
-		userPageBtn.setAttribute("target", "_blank");
-
-		//setting user's logo image as button//
 		var userLogo = document.createElement("img");
 		userLogo.setAttribute("src", logoImg);
 		userLogo.classList.add("logoImage");
-		offlineUserDisplay.appendChild(userLogo);
+		inactiveUserDisplay.appendChild(userLogo);
 
-		//put image and username button in user information well//
-		var usernameHeading = document.createElement('h3');
+		//put image in user information well//
+		var usernameHeading = document.createElement("h5");
 		var userNameNode = document.createTextNode(userName);
 		usernameHeading.appendChild(userNameNode);
-		offlineUserDisplay.appendChild(usernameHeading);
+		inactiveUserDisplay.appendChild(usernameHeading);
 
-		//create <p> for streaming information//
-		var streamInfoPar = document.createElement("p");
-		var streamInfo = document.createTextNode(description);
-		userPageBtn.appendChild(streamInfo);
-		streamInfoPar.appendChild(userPageBtn);
-		offlineUserDisplay.appendChild(streamInfoPar);
-		document.getElementById("userInfo").appendChild(offlineUserDisplay);
+		document.getElementById("userInfo").appendChild(inactiveUserDisplay);
+	}
+
+	var handleOfflineUserData = function (data, textStatus, jqXHR) {
+		if (data.hasOwnProperty("status")) {
+			handleInactiveUserData(data);
+			return;
+		} else {
+			var logoImg = data.logo,
+				description = "Offline",
+				userName = data.name,
+				link = "https://www.twitch.tv/" + userName;
+
+			var offlineUserDisplay = document.createElement("div");
+			offlineUserDisplay.classList.add("well", "offline", "userStyle");
+
+			//create button to go to user page//		
+			var userPageBtn = document.createElement("a");
+			userPageBtn.setAttribute("href", link);
+			userPageBtn.setAttribute("target", "_blank");
+
+
+			var userLogo = document.createElement("img");
+			userLogo.setAttribute("src", logoImg);
+			userLogo.classList.add("logoImage");
+			offlineUserDisplay.appendChild(userLogo);
+
+			var usernameHeading = document.createElement("h3");
+			var userNameNode = document.createTextNode(userName);
+			var offlineIcon = document.createElement("i");
+			offlineIcon.classList.add("glyphicon", "glyphicon-remove-sign");
+			usernameHeading.appendChild(userNameNode);
+			usernameHeading.appendChild(offlineIcon);
+			offlineUserDisplay.appendChild(usernameHeading);
+
+
+			//create <p> for streaming information//
+			var streamInfoPar = document.createElement("p");
+			var streamInfo = document.createTextNode(description);
+			userPageBtn.appendChild(streamInfo);
+			streamInfoPar.appendChild(userPageBtn);
+			offlineUserDisplay.appendChild(streamInfoPar);
+
+			document.getElementById("userInfo").appendChild(offlineUserDisplay);
+		}
 	}
 
 	function getOfflineUserInfo(userName) {
@@ -90,13 +130,13 @@ window.onload = function () {
 
 	var url = "https://wind-bow.gomix.me/twitch-api",
 		//these are the usernames suggested in the excersize description//
-		usernames = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas"],
+		usernames = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"],
 		currentUserName = "";
 
 
 	var handleData = function (data, textStatus, jqXHR) {
 		if (data.stream === null) {
-			//Create wells for offline users - at this point they contain nothing//
+			//this grabs the username from the end of a URL in the Offline user Object//
 			var userName = data._links.channel.substr(38);
 			getOfflineUserInfo(userName);
 
@@ -118,16 +158,17 @@ window.onload = function () {
 			userPageBtn.setAttribute("href", link);
 			userPageBtn.setAttribute("target", "_blank");
 
-			//setting user's logo image as button//
 			var userLogo = document.createElement("img");
 			userLogo.setAttribute("src", logoImg);
 			userLogo.classList.add("logoImage");
 			onlineUserDisplay.appendChild(userLogo);
 
-			//put image and username button in user information well//
 			var usernameHeading = document.createElement('h3');
 			var userNameNode = document.createTextNode(userName);
+			var onlineIcon = document.createElement('i');
+			onlineIcon.classList.add("glyphicon", "glyphicon-ok-sign");
 			usernameHeading.appendChild(userNameNode);
+			usernameHeading.appendChild(onlineIcon);
 			onlineUserDisplay.appendChild(usernameHeading);
 
 			//create <p> for streaming information//
@@ -136,6 +177,7 @@ window.onload = function () {
 			userPageBtn.appendChild(streamInfo);
 			streamInfoPar.appendChild(userPageBtn);
 			onlineUserDisplay.appendChild(streamInfoPar);
+
 			document.getElementById("userInfo").appendChild(onlineUserDisplay);
 		}
 
